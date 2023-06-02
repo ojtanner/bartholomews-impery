@@ -32,6 +32,8 @@ sequenceDiagram
     C->>R: Pay summoning fee
     R-->>C: Give order number
     R-)A: Send summoning fee
+    R-)S: Pass on order
+    S--): Send caged imp to reception
     
 ```
 
