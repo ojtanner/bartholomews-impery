@@ -38,6 +38,7 @@ sequenceDiagram
     loop Every few seconds
         C->>R:  ask if summoning is finished yet
         R-->>C: answer the anxious customer
+    end
 ```
 
 #### Sad Path
