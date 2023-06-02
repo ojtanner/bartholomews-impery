@@ -34,9 +34,12 @@ sequenceDiagram
     R-)A: Send summoning fee
     R-)S: Pass on order
     S--)R: Send caged imp to reception
-    loop Every few seconds
-        C->>R: Ask if summoning is finished yet
-        R-->>C: Answer the anxious customer
+    alt Summoning finished
+        C->>R: Provide order number
+        R-->>C: Give caged imp to customer
+    else Summoning still onging
+        C->>R: Provide order number
+        R-->>C: Tell customer to come again in a few
     end
 ```
 
@@ -55,8 +58,11 @@ sequenceDiagram
     S--)R: Notify reception of failure
     R-)A: Ask to return summoning fee for reimbursment
     A--)R: Send summoning fee back to reception
-    loop Every few seconds
-        C->>R: Ask if summoning is finished yet
-        R-->>C: Answer the anxious customer
+    alt Summoning finished
+        C->>R: Provide order number
+        R-->>C: Reimburse customer
+    else Summoning still onging
+        C->>R: Provide order number
+        R-->>C: Tell customer to come again in a few
     end
 ```
