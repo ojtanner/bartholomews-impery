@@ -25,10 +25,19 @@ The customer orders an imp, pays Barth the fee, and waits until the summoning is
 
 ```mermaid
 sequenceDiagram
-    Alice->>John: Hello John, how are you?
-    activate John
-    John-->>Alice: Great!
-    deactivate John
+    actor C as Customer
+    participant R as Reception
+    participant A as Accounting
+    participant S as Summoning-Circle
+    
+    C->>R:  Pay summoning fee
+    R-->>C: Give order number
+    R-)A:   Send summoning fee
+    R-)S:   Pass on order
+    S--):   Send caged imp to reception
+    polling Every few seconds
+        C->>R:  ask if summoning is finished yet
+        R-->>C: answer the anxious customer
 ```
 
 #### Sad Path
