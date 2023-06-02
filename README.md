@@ -35,7 +35,7 @@ sequenceDiagram
     R-)A:   Send summoning fee
     R-)S:   Pass on order
     S--):   Send caged imp to reception
-    polling Every few seconds
+    loop Every few seconds
         C->>R:  ask if summoning is finished yet
         R-->>C: answer the anxious customer
 ```
