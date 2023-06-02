@@ -33,8 +33,11 @@ sequenceDiagram
     R-->>C: Give order number
     R-)A: Send summoning fee
     R-)S: Pass on order
-    S--): Send caged imp to reception
-    
+    S--)R: Send caged imp to reception
+    loop Every few seconds
+        C->>R: Ask if summoning is finished yet
+        R-->>C: Answer the anxious customer
+    end
 ```
 
 #### Sad Path
