@@ -15,12 +15,21 @@ First, i want to start off by exploring sagas. Here is how we do it:
 
 ### Simulating failure and unreliability
 In order to learn something from this excercise, we want stuff to go wrong. In our case, we start simple. Here is what can go wrong:
-1. Failed summonings: Oops. Either the overworked and underappreciated summoner slipped on a banana peel during the summoning, or they accidentally read the wrong scroll and tried to summon something... a bit more feisty than a mere imp. Either way, the summoning went south and Barth is now short one employee.
+1. Failed summonings: Oops. Either the overworked and underappreciated summoner slipped on a banana peel during the summoning, or they accidentally read the wrong scroll and tried to summon something... a bit more feisty than a mere imp. Either way, the summoning went south.
 2. No more summoners available: Bartholomew should probably pay more than the mandatory minimum wage if he wants to attract more workers. After many a failed summoning, Barth is out of workers. At least for now.
 
 ### Workflows
-- Happy path: the customer orders an imp, pays Barth the fee, and waits until the summoning is finished. Barth tosses the money to the accountant for safekeeping and passes the order to the summoning circle. Once the imp has materialized, it is caged and brought to the customer. Happy faces all around.
 
-- Sad path: the summoning fails. Barth (reluctantly) asks the accountant to return him the summoning-fee, and reimburses the customer. And somebody has to clean up the mess the dead summoner left behind...
+#### Happy Path
+The customer orders an imp, pays Barth the fee, and waits until the summoning is finished. Barth tosses the money to the accountant for safekeeping and passes the order to the summoning circle. Once the imp has materialized, it is caged and brought to the customer. Happy faces all around.
 
-- Sad path: we are out of summoners! Barth cannot, in good conscience, take the customers money, since there currently is no way of summoning imps. Luckily, Barth has a steady influx of new employees, so the customer can come back in the near future, should they still want an imp.
+```mermaid
+sequenceDiagram
+    Alice->>John: Hello John, how are you?
+    activate John
+    John-->>Alice: Great!
+    deactivate John
+```
+
+#### Sad Path
+The summoning fails. Barth (reluctantly) asks the accountant to return him the summoning-fee, and reimburses the customer.
