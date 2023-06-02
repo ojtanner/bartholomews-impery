@@ -30,14 +30,7 @@ sequenceDiagram
     participant A as Accounting
     participant S as Summoning-Circle
     C->>R: Pay summoning fee
-    R-->>C: Give order number
-    R-)A: Send summoning fee
-    R-)S: Pass on order
-    S--): Send caged imp to reception
-    loop Every few seconds
-        C->>R: Ask if summoning is finished yet
-        R-->>C: Answer the anxious customer
-    end
+    
 ```
 
 #### Sad Path
