@@ -42,3 +42,21 @@ sequenceDiagram
 
 #### Sad Path
 The summoning fails. Barth (reluctantly) asks the accountant to return him the summoning-fee, and reimburses the customer.
+```mermaid
+sequenceDiagram
+    actor C as Customer
+    participant R as Reception
+    participant A as Accounting
+    participant S as Summoning-Circle
+    C->>R: Pay summoning fee
+    R-->>C: Give order number
+    R-)A: Send summoning fee
+    R-)S: Pass on order
+    S--)R: Notify reception of failure
+    R-)A: Ask to return summoning fee for reimbursment
+    A--)R: Send summoning fee back to reception
+    loop Every few seconds
+        C->>R: Ask if summoning is finished yet
+        R-->>C: Answer the anxious customer
+    end
+```
