@@ -31,6 +31,7 @@ sequenceDiagram
     participant S as Summoning-Circle
     C->>R: Pay summoning fee
     R-->>C: Give order number
+    R-)A: Send summoning fee
     
 ```
 
