@@ -5,7 +5,7 @@ import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.OrderRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
-import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPooled;
 
 import java.util.Optional;
 
@@ -13,24 +13,24 @@ import java.util.Optional;
 public class RedisOrderRepository implements OrderRepository {
 
     private final ObjectMapper objectMapper;
-    private final Jedis jedis;
+    private final JedisPooled jedisPooled;
 
 
     public RedisOrderRepository(
             ObjectMapper objectMapper,
-            Jedis jedis
+            JedisPooled jedisPooled
     ) {
         this.objectMapper = objectMapper;
-        this.jedis = jedis;
+        this.jedisPooled = jedisPooled;
     }
 
 
     @Override
     public void save(Order order) {
         try {
-            String key = Integer.toString(order.getId());
+            String key = order.getId();
             String value = objectMapper.writeValueAsString(order);
-            jedis.set(key, value);
+            jedisPooled.set(key, value);
         } catch (JsonProcessingException exception) {
             System.err.println("Could not serialze order");
             System.err.println(order
@@ -41,7 +41,7 @@ public class RedisOrderRepository implements OrderRepository {
 
     @Override
     public Optional<Order> findById(int id) {
-        Optional<String> maybeOrderJson = Optional.ofNullable(jedis.get(Integer.toString(id)));
+        Optional<String> maybeOrderJson = Optional.ofNullable(jedisPooled.get(Integer.toString(id)));
         return maybeOrderJson.map(orderJson -> {
             try {
                 return objectMapper.readValue(orderJson, Order.class);

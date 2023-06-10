@@ -1,18 +1,20 @@
 package ch.ojtanner.bartholomewsimpery.domain.entities;
 
+import java.util.Objects;
+
 public abstract class Entity {
 
-    private int id;
+    private final String id;
 
-    public Entity(int id) {
+    public Entity(String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     public boolean equals(Entity e2) {
-        return e2 != null && this.id == e2.id;
+        return e2 != null && Objects.equals(this.id, e2.id);
     }
 }

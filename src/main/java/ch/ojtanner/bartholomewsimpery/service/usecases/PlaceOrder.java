@@ -32,7 +32,7 @@ public class PlaceOrder implements PlaceOrderUseCase {
     @Override
     public Order handle(int payload) {
         SummoningFee summoningFee = new SummoningFee(Currency.GOLD, payload);
-        int newId = idGenerator.generate();
+        String newId = idGenerator.generate();
         Order newOrder = new Order(newId, summoningFee);
 
         orderRepository.save(newOrder);

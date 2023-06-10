@@ -19,8 +19,8 @@ public class OrderController {
         this.orderRepository = orderRepository;
     }
 
-    @PostMapping
-    public Order placeOrder(@RequestBody int summoningFee) {
+    @PostMapping(path = "/{summoningFee}")
+    public Order placeOrder(@PathVariable Integer summoningFee) {
         return placeOrderUseCase.handle(summoningFee);
     }
 
@@ -31,14 +31,14 @@ public class OrderController {
 
     @PostMapping(path = "/save")
     public void saveTest() {
-        Order order = new Order(1234, new SummoningFee(Currency.GOLD, 500));
+        Order order = new Order("1234", new SummoningFee(Currency.GOLD, 500));
 
         orderRepository.save(order);
     }
 
     @GetMapping(path = "/get")
     public Order getTest() {
-        Order fallback = new Order(666, new SummoningFee(Currency.GOLD, 100));
+        Order fallback = new Order("666", new SummoningFee(Currency.GOLD, 100));
 
         return orderRepository.findById(1234).orElse(fallback);
     }

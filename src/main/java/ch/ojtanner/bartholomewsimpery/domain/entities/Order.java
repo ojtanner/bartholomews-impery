@@ -8,7 +8,7 @@ public class Order extends Entity {
     private OrderStatus status;
     private final SummoningFee summoningFee;
 
-    public Order(int id, SummoningFee summoningFee) {
+    public Order(String id, SummoningFee summoningFee) {
         super(id);
         this.summoningFee = summoningFee;
         this.status = OrderStatus.PLACED;
