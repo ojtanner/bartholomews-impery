@@ -17,10 +17,11 @@ public class RedisOrderRepository implements OrderRepository {
 
 
     public RedisOrderRepository(
-            ObjectMapper objectMapper
+            ObjectMapper objectMapper,
+            Jedis jedis
     ) {
         this.objectMapper = objectMapper;
-        this.jedis = new Jedis();
+        this.jedis = jedis;
     }
 
 
