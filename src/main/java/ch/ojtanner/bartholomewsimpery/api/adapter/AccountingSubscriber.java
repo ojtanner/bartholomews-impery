@@ -1,4 +1,4 @@
-package ch.ojtanner.bartholomewsimpery.service.ports.incoming;
+package ch.ojtanner.bartholomewsimpery.api.adapter;
 
 import ch.ojtanner.bartholomewsimpery.domain.valueobjects.SummoningFee;
 

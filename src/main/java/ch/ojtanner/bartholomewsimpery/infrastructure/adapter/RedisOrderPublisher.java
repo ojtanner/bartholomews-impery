@@ -1,7 +1,7 @@
-package ch.ojtanner.bartholomewsimpery.infrastructure.incoming;
+package ch.ojtanner.bartholomewsimpery.infrastructure.adapter;
 
 import ch.ojtanner.bartholomewsimpery.domain.entities.Order;
-import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.OrderPublisher;
+import ch.ojtanner.bartholomewsimpery.infrastructure.port.OrderPublisher;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;

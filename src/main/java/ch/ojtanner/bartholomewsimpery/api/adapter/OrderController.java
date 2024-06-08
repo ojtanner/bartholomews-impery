@@ -1,10 +1,10 @@
-package ch.ojtanner.bartholomewsimpery.infrastructure.incoming;
+package ch.ojtanner.bartholomewsimpery.api.adapter;
 
 import ch.ojtanner.bartholomewsimpery.domain.constants.Currency;
 import ch.ojtanner.bartholomewsimpery.domain.entities.Order;
 import ch.ojtanner.bartholomewsimpery.domain.valueobjects.SummoningFee;
-import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.OrderRepository;
-import ch.ojtanner.bartholomewsimpery.service.usecases.PlaceOrderUseCase;
+import ch.ojtanner.bartholomewsimpery.infrastructure.port.OrderRepository;
+import ch.ojtanner.bartholomewsimpery.api.port.PlaceOrderUseCase;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,11 +22,6 @@ public class OrderController {
     @PostMapping(path = "/{summoningFee}")
     public Order placeOrder(@PathVariable Integer summoningFee) {
         return placeOrderUseCase.handle(summoningFee);
-    }
-
-    @GetMapping
-    public String helloWorld() {
-        return "Hello, World";
     }
 
     @PostMapping(path = "/save")

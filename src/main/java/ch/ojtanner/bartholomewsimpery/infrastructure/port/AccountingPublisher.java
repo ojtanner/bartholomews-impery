@@ -1,4 +1,4 @@
-package ch.ojtanner.bartholomewsimpery.service.ports.outgoing;
+package ch.ojtanner.bartholomewsimpery.infrastructure.port;
 
 import ch.ojtanner.bartholomewsimpery.domain.valueobjects.SummoningFee;
 

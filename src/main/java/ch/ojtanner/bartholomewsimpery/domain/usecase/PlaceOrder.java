@@ -1,12 +1,13 @@
-package ch.ojtanner.bartholomewsimpery.service.usecases;
+package ch.ojtanner.bartholomewsimpery.domain.usecase;
 
+import ch.ojtanner.bartholomewsimpery.api.port.PlaceOrderUseCase;
 import ch.ojtanner.bartholomewsimpery.domain.constants.Currency;
 import ch.ojtanner.bartholomewsimpery.domain.entities.Order;
 import ch.ojtanner.bartholomewsimpery.domain.valueobjects.SummoningFee;
-import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.IdGenerator;
-import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.OrderPublisher;
-import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.OrderRepository;
-import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.AccountingPublisher;
+import ch.ojtanner.bartholomewsimpery.infrastructure.port.IdGenerator;
+import ch.ojtanner.bartholomewsimpery.infrastructure.port.OrderPublisher;
+import ch.ojtanner.bartholomewsimpery.infrastructure.port.OrderRepository;
+import ch.ojtanner.bartholomewsimpery.infrastructure.port.AccountingPublisher;
 import org.springframework.stereotype.Component;
 
 @Component

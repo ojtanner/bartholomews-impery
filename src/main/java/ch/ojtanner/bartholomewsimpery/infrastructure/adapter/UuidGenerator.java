@@ -1,6 +1,6 @@
-package ch.ojtanner.bartholomewsimpery.infrastructure.incoming;
+package ch.ojtanner.bartholomewsimpery.infrastructure.adapter;
 
-import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.IdGenerator;
+import ch.ojtanner.bartholomewsimpery.infrastructure.port.IdGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

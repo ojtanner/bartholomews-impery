@@ -1,11 +1,8 @@
-package ch.ojtanner.bartholomewsimpery.infrastructure.incoming;
+package ch.ojtanner.bartholomewsimpery.infrastructure.adapter;
 
 import ch.ojtanner.bartholomewsimpery.domain.valueobjects.SummoningFee;
-import ch.ojtanner.bartholomewsimpery.service.ports.outgoing.AccountingPublisher;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import ch.ojtanner.bartholomewsimpery.infrastructure.port.AccountingPublisher;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 
 @Component
 public class RedisAccountingPublisher implements AccountingPublisher {

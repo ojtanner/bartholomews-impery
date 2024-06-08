@@ -1,4 +1,4 @@
-package ch.ojtanner.bartholomewsimpery.service.usecases;
+package ch.ojtanner.bartholomewsimpery.api.port;
 
 import ch.ojtanner.bartholomewsimpery.domain.entities.Order;
 
