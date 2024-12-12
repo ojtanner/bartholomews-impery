@@ -4,5 +4,5 @@ import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
 
 public interface AccountingCommandsPublisher {
 
-    public void publishProcessPaymentCommand(Order order);
+    void publishProcessPaymentCommand(Order order);
 }

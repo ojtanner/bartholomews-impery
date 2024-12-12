@@ -1,30 +1,31 @@
-package ch.ojtanner.bartholomewsimpery.orchestration.infrastructure.adapter;
+package ch.ojtanner.bartholomewsimpery.reception.infrastructure.adapter;
 
 import ch.ojtanner.bartholomewsimpery.orchestration.api.adapter.NatsConnection;
-import ch.ojtanner.bartholomewsimpery.orchestration.infrastructure.port.AccountingCommandsPublisher;
 import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
 import ch.ojtanner.bartholomewsimpery.reception.infrastructure.port.OrderPublisher;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Component
-public class AccountingNatsPublisher implements AccountingCommandsPublisher {
+@Service
+public class ReceptionNatsPublisher implements OrderPublisher {
 
     private final NatsConnection natsConnection;
     private final ObjectMapper objectMapper;
 
-    public AccountingNatsPublisher(NatsConnection natsConnection, ObjectMapper objectMapper) {
+    public ReceptionNatsPublisher(
+            NatsConnection natsConnection,
+            ObjectMapper objectMapper
+    ) {
         this.natsConnection = natsConnection;
         this.objectMapper = objectMapper;
     }
 
     @Override
-    public void publishProcessPaymentCommand(Order order) {
+    public void publish(Order order) {
         try {
             byte[] message = objectMapper.writeValueAsBytes(order);
-            String topicName = "process-payment";
+            String topicName = "order-created";
             natsConnection.getConnection().publish(topicName, message);
 
         } catch (JsonProcessingException e) {

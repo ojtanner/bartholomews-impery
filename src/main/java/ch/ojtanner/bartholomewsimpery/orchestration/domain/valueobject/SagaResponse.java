@@ -1,14 +1,16 @@
 package ch.ojtanner.bartholomewsimpery.orchestration.domain.valueobject;
 
+import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
+
 public abstract sealed class SagaResponse permits ImpDeliveredResponse, ImpSummonedResponse, OrderCompletedResponse, PaymentProcessedResponse {
 
-    private final String id;
+    private final Order order;
 
-    protected SagaResponse(String id) {
-        this.id = id;
+    protected SagaResponse(Order order) {
+        this.order = order;
     }
 
-    public String getId() {
-        return id;
+    public Order getOrder() {
+        return order;
     }
 }

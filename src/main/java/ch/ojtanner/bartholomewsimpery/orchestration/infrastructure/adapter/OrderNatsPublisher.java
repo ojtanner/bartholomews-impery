@@ -10,4 +10,9 @@ public class OrderNatsPublisher implements ReceptionCommandsPublisher {
     public void publishDeliverImpCommand(Order order) {
         System.out.println("Delivering Imp of order " + order.getId());
     }
+
+    @Override
+    public void publishCompleteOrderCommand(Order order) {
+
+    }
 }

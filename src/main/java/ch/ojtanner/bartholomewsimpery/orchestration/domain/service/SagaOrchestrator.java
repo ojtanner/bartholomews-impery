@@ -1,4 +1,4 @@
-package ch.ojtanner.bartholomewsimpery.orchestration;
+package ch.ojtanner.bartholomewsimpery.orchestration.domain.service;
 
 import ch.ojtanner.bartholomewsimpery.orchestration.domain.constant.SagaOrchestratorState;
 import ch.ojtanner.bartholomewsimpery.orchestration.domain.entity.SagaState;
@@ -8,9 +8,11 @@ import ch.ojtanner.bartholomewsimpery.orchestration.infrastructure.port.Receptio
 import ch.ojtanner.bartholomewsimpery.orchestration.infrastructure.port.SagaStateRepository;
 import ch.ojtanner.bartholomewsimpery.orchestration.infrastructure.port.SummoningCircleCommandPublisher;
 import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.Optional;
 
+@Service
 public class SagaOrchestrator {
 
     private final SagaStateRepository sagaStateRepository;
@@ -18,32 +20,36 @@ public class SagaOrchestrator {
     private final AccountingCommandsPublisher accountingCommandsPublisher;
     private final SummoningCircleCommandPublisher summoningCircleCommandPublisher;
 
-    private final Order orderCopy;
-
     public SagaOrchestrator(
             SagaStateRepository sagaStateRepository,
             ReceptionCommandsPublisher receptionCommandsPublisher,
             AccountingCommandsPublisher accountingCommandsPublisher,
-            SummoningCircleCommandPublisher summoningCircleCommandPublisher,
-            Order order
+            SummoningCircleCommandPublisher summoningCircleCommandPublisher
     ) {
         this.sagaStateRepository = sagaStateRepository;
         this.receptionCommandsPublisher = receptionCommandsPublisher;
         this.accountingCommandsPublisher = accountingCommandsPublisher;
         this.summoningCircleCommandPublisher = summoningCircleCommandPublisher;
-        this.orderCopy = new Order(order.getId(), order.getSummoningFee());
     }
 
     public void startSaga(Order order) {
+        System.out.println("Starting Saga " + order.getId());
+        System.out.println("Verifying if Saga already exists: " + order.getId());
+        Optional<SagaState> maybeSagaState = sagaStateRepository.findById(order.getId());
+        if (maybeSagaState.isPresent()) {
+            System.out.println("Saga already exists: " + order.getId());
+        }
+        System.out.println("Saga does not exist: " + order.getId() + ". Proceeding.");
         SagaState sagaState = new SagaState(order.getId());
         sagaStateRepository.save(sagaState);
         accountingCommandsPublisher.publishProcessPaymentCommand(order);
     }
 
     public void handleResponse(SagaResponse event) {
-        SagaState sagaState = sagaStateRepository.
-                findById(event.getId())
-                .orElseThrow(() -> new IllegalStateException("SagaState of id " + event.getId() + " not found"));
+        Order orderOfEvent = event.getOrder();
+        SagaState sagaState = sagaStateRepository
+                .findById(orderOfEvent.getId())
+                .orElseThrow(() -> new IllegalStateException("SagaState of id " + orderOfEvent.getId() + " not found"));
 
         switch (event) {
             case PaymentProcessedResponse response -> {
@@ -52,7 +58,7 @@ public class SagaOrchestrator {
                 }
 
                 sagaState.advanceState();
-                summoningCircleCommandPublisher.publishStartSummoningCommand(orderCopy);
+                summoningCircleCommandPublisher.publishStartSummoningCommand(orderOfEvent);
 
             }
             case ImpSummonedResponse response -> {
@@ -61,7 +67,7 @@ public class SagaOrchestrator {
                 }
 
                 sagaState.advanceState();
-                receptionCommandsPublisher.publishDeliverImpCommand(orderCopy);
+                receptionCommandsPublisher.publishDeliverImpCommand(orderOfEvent);
             }
             case ImpDeliveredResponse response -> {
                 if (sagaState.getState() != SagaOrchestratorState.SUMMONING_FINISHED) {
@@ -69,7 +75,7 @@ public class SagaOrchestrator {
                 }
 
                 sagaState.advanceState();
-                receptionCommandsPublisher.publishDeliverImpCommand(orderCopy);
+                receptionCommandsPublisher.publishDeliverImpCommand(orderOfEvent);
             }
             case OrderCompletedResponse response -> {
                 if (sagaState.getState() != SagaOrchestratorState.IMP_DELIVERED) {

@@ -14,18 +14,15 @@ import org.springframework.stereotype.Component;
 public class PlaceOrder implements PlaceOrderUseCase {
 
     private final OrderPublisher orderPublisher;
-    private final AccountingPublisher accountingPublisher;
     private final OrderRepository orderRepository;
     private final IdGenerator idGenerator;
 
     public PlaceOrder(
             OrderPublisher orderPublisher,
-            AccountingPublisher accountingPublisher,
             OrderRepository orderRepository,
             IdGenerator idGenerator
     ) {
         this.orderPublisher = orderPublisher;
-        this.accountingPublisher = accountingPublisher;
         this.orderRepository = orderRepository;
         this.idGenerator = idGenerator;
     }
@@ -37,7 +34,6 @@ public class PlaceOrder implements PlaceOrderUseCase {
         Order newOrder = new Order(newId, summoningFee);
 
         orderRepository.save(newOrder);
-        accountingPublisher.publish(summoningFee);
         orderPublisher.publish(newOrder);
         newOrder.inProgress();
 
