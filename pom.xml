@@ -5,17 +5,18 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.1.12</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<groupId>ch.ojtanner.bartholomews-impery</groupId>
 	<artifactId>reception</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Bartholomews Impery Reception</name>
+    <packaging>pom</packaging>
+    <name>Bartholomews Impery Reception</name>
 	<description>Reception Service of Bartholomews Impery</description>
 
-	<properties>
+    <properties>
 		<java.version>21</java.version>
 		<nats.version>2.19.0</nats.version>
 	</properties>
@@ -36,12 +37,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.nats</groupId>
