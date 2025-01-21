@@ -51,13 +51,17 @@ public class SagaOrchestrator {
                 .findById(orderOfEvent.getId())
                 .orElseThrow(() -> new IllegalStateException("SagaState of id " + orderOfEvent.getId() + " not found"));
 
+        System.out.println("Orchestrator for saga " + orderOfEvent.getId() + " received new event. Current state: " + sagaState);
+
         switch (event) {
             case PaymentProcessedResponse response -> {
                 if (sagaState.getState() != SagaOrchestratorState.ORDER_CREATED) {
                     return;
                 }
 
+                System.out.println("Payment processed event received. : " + orderOfEvent.getId());
                 sagaState.advanceState();
+                System.out.println("New saga state: " + sagaState.getState());
                 summoningCircleCommandPublisher.publishStartSummoningCommand(orderOfEvent);
 
             }
