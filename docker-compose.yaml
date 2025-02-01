@@ -2,10 +2,9 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
+    network_mode: host
     volumes:
       - "./backing-services/prometheus.yml:/etc/prometheus/prometheus.yml"
-    networks:
-      - localprom
     ports:
       - "9090:9090"
     restart: always
@@ -15,8 +14,7 @@ services:
     container_name: grafana
     volumes:
       - ./backing-services/datasources.yml:/etc/grafana/provisioning/datasources.yml
-    networks:
-      - localprom
+    network_mode: host
     ports:
       - '3000:3000'
     depends_on:
@@ -30,9 +28,4 @@ services:
       - "4222:4222"
       - "6222:6222"
       - "8222:8222"
-    networks:
-      - localprom
-
-networks:
-  localprom:
-    driver: bridge
+    network_mode: host
