@@ -2,8 +2,11 @@ package ch.ojtanner.bartholomewsimpery.accounting.infrastructure.port;
 
 import ch.ojtanner.bartholomewsimpery.accounting.domain.entity.Order;
 
-public interface PaymentProcessedPublisher {
+import java.util.Optional;
 
-    void publish(Order order);
+public interface OrderRepository {
 
+    void save(Order order);
+
+    Optional<Order> findById(String id);
 }
