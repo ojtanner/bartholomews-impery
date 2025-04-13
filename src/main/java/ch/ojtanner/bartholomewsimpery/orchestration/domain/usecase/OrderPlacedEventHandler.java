@@ -38,7 +38,7 @@ public class OrderPlacedEventHandler implements OrderPlacedHandler, MessageHandl
     }
 
     private void handle(Order placedOrder) {
-        System.out.println("Received OrderPlacedEvent: id: " + placedOrder.getId() + " status: " + placedOrder.getStatus() + " summoningFee: " + placedOrder.getSummoningFee());
+        System.out.println("Received OrderPlacedEvent: id: " + placedOrder.getId() + " status: " + placedOrder.getStatus() + " summoningFee: " + placedOrder.getSummoningFee().toString());
         sagaOrchestrator.startSaga(placedOrder);
     }
 }

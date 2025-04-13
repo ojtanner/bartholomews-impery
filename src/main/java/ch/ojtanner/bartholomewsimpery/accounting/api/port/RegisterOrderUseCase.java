@@ -2,7 +2,7 @@ package ch.ojtanner.bartholomewsimpery.accounting.api.port;
 
 import io.nats.client.Message;
 
-public interface RegisterOrderHandler {
+public interface RegisterOrderUseCase {
 
-    void onMessage(Message message);
+    void handle(Message message);
 }

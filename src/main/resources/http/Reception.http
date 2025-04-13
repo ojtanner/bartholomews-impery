@@ -1,0 +1,7 @@
+### GET all orders
+GET localhost:8080/reception/order
+
+##
+
+### POST order
+POST localhost:8080/reception/order/99

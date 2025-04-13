@@ -1,6 +1,6 @@
 package ch.ojtanner.bartholomewsimpery.accounting.domain.usecase;
 
-import ch.ojtanner.bartholomewsimpery.accounting.api.port.RegisterOrderHandler;
+import ch.ojtanner.bartholomewsimpery.accounting.api.port.RegisterOrderUseCase;
 import ch.ojtanner.bartholomewsimpery.accounting.infrastructure.port.OrderRepository;
 import ch.ojtanner.bartholomewsimpery.accounting.domain.entity.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class RegisterOrderMessageHandler implements RegisterOrderHandler {
+public class RegisterOrder implements RegisterOrderUseCase {
 
     private final ObjectMapper objectMapper;
     private final OrderRepository orderRepository;
 
-    public RegisterOrderMessageHandler(
+    public RegisterOrder(
             ObjectMapper objectMapper,
             OrderRepository orderRepository
     ) {
@@ -24,7 +24,7 @@ public class RegisterOrderMessageHandler implements RegisterOrderHandler {
     }
 
     @Override
-    public void onMessage(Message message) {
+    public void handle(Message message) {
         try {
             ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order orderToBePayed = objectMapper.readValue(message.getData(), ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order.class);
             Order domainOrder = Order.fromReceptionOrder(orderToBePayed);

@@ -1,0 +1,5 @@
+### GET all payments
+GET localhost:8080/accounting/order
+    ?generated-in=IntelliJ IDEA
+
+##

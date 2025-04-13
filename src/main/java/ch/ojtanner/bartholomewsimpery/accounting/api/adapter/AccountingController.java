@@ -1,21 +1,35 @@
 package ch.ojtanner.bartholomewsimpery.accounting.api.adapter;
 
-import ch.ojtanner.bartholomewsimpery.accounting.api.port.PayOrderHandler;
+import ch.ojtanner.bartholomewsimpery.accounting.api.port.PayOrderUseCase;
+import ch.ojtanner.bartholomewsimpery.accounting.api.port.RetrieveAllPaymentsUseCase;
+import ch.ojtanner.bartholomewsimpery.accounting.domain.entity.Order;
 import ch.ojtanner.bartholomewsimpery.accounting.domain.exception.PaymentFailedException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/accounting")
 public class AccountingController {
 
-    private final PayOrderHandler payOrderHandler;
+    private final PayOrderUseCase payOrderUseCase;
+    private final RetrieveAllPaymentsUseCase retrieveAllPaymentsUseCase;
 
-    public AccountingController(PayOrderHandler payOrderHandler) {
-        this.payOrderHandler = payOrderHandler;
+    public AccountingController(
+            PayOrderUseCase payOrderUseCase,
+            RetrieveAllPaymentsUseCase retrieveAllPaymentsUseCase
+    ) {
+        this.payOrderUseCase = payOrderUseCase;
+        this.retrieveAllPaymentsUseCase = retrieveAllPaymentsUseCase;
     }
 
-    @PatchMapping("/{orderId}")
+    @PatchMapping("/order/{orderId}")
     public void payOrder(@PathVariable String orderId) throws PaymentFailedException {
-        payOrderHandler.payOrder(orderId);
+        payOrderUseCase.handle(orderId);
+    }
+
+    @GetMapping("/order")
+    public List<Order> getOrders() {
+        return retrieveAllPaymentsUseCase.handle();
     }
 }

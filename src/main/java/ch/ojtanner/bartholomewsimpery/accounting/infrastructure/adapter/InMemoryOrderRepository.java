@@ -4,9 +4,7 @@ import ch.ojtanner.bartholomewsimpery.accounting.infrastructure.port.OrderReposi
 import ch.ojtanner.bartholomewsimpery.accounting.domain.entity.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class InMemoryOrderRepository implements OrderRepository {
@@ -21,5 +19,10 @@ public class InMemoryOrderRepository implements OrderRepository {
     @Override
     public Optional<Order> findById(String id) {
         return Optional.ofNullable(repo.get(id));
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return new ArrayList<>(repo.values());
     }
 }

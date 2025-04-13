@@ -36,11 +36,15 @@ public class SagaOrchestrator {
         System.out.println("Starting Saga " + order.getId());
         System.out.println("Verifying if Saga already exists: " + order.getId());
         Optional<SagaState> maybeSagaState = sagaStateRepository.findById(order.getId());
+        SagaState sagaState;
+
         if (maybeSagaState.isPresent()) {
-            System.out.println("Saga already exists: " + order.getId());
+            System.out.println("Saga already exists: " + order.getId() + ", no-op");
+            return;
         }
+
         System.out.println("Saga does not exist: " + order.getId() + ". Proceeding.");
-        SagaState sagaState = new SagaState(order.getId());
+        sagaState = new SagaState(order.getId());
         sagaStateRepository.save(sagaState);
         accountingCommandsPublisher.publishProcessPaymentCommand(order);
     }

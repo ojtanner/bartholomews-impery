@@ -2,7 +2,7 @@ package ch.ojtanner.bartholomewsimpery.accounting.api.port;
 
 import ch.ojtanner.bartholomewsimpery.accounting.domain.exception.PaymentFailedException;
 
-public interface PayOrderHandler {
+public interface PayOrderUseCase {
 
-    void payOrder(String orderId) throws PaymentFailedException;
+    void handle(String orderId) throws PaymentFailedException;
 }

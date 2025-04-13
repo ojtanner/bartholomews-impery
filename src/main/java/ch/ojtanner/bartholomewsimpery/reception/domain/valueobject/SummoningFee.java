@@ -23,6 +23,11 @@ public class SummoningFee implements ValueObject {
     }
 
     @Override
+    public String toString() {
+        return amount + " " + currency;
+    }
+
+    @Override
     public boolean equals(ValueObject vo2) {
         if (!(vo2 instanceof SummoningFee sf2)) return false;
 

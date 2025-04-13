@@ -1,6 +1,6 @@
 package ch.ojtanner.bartholomewsimpery.accounting.domain.usecase;
 
-import ch.ojtanner.bartholomewsimpery.accounting.api.port.PayOrderHandler;
+import ch.ojtanner.bartholomewsimpery.accounting.api.port.PayOrderUseCase;
 import ch.ojtanner.bartholomewsimpery.accounting.domain.exception.PaymentFailedException;
 import ch.ojtanner.bartholomewsimpery.accounting.infrastructure.port.OrderRepository;
 import ch.ojtanner.bartholomewsimpery.accounting.domain.entity.Order;
@@ -8,12 +8,12 @@ import ch.ojtanner.bartholomewsimpery.accounting.infrastructure.port.PaymentProc
 import org.springframework.stereotype.Component;
 
 @Component
-public class PayOrderRequestHandler implements PayOrderHandler {
+public class PayOrderRequest implements PayOrderUseCase {
 
     private final OrderRepository orderRepository;
     private final PaymentProcessedPublisher paymentProcessedPublisher;
 
-    public PayOrderRequestHandler(
+    public PayOrderRequest(
             OrderRepository orderRepository,
             PaymentProcessedPublisher paymentProcessedPublisher
     ) {
@@ -22,7 +22,7 @@ public class PayOrderRequestHandler implements PayOrderHandler {
     }
 
     @Override
-    public void payOrder(String orderId) throws PaymentFailedException {
+    public void handle(String orderId) throws PaymentFailedException {
         Order orderToPay = orderRepository.findById(orderId).orElseThrow(PaymentFailedException::new);
 
         if (Math.random() < 0.5) {
