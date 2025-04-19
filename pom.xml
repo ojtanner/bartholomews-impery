@@ -12,7 +12,6 @@
 	<groupId>ch.ojtanner.bartholomews-impery</groupId>
 	<artifactId>reception</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
     <name>Bartholomews Impery Reception</name>
 	<description>Reception Service of Bartholomews Impery</description>
 
@@ -20,6 +19,7 @@
 		<java.version>21</java.version>
 		<nats.version>2.19.0</nats.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>

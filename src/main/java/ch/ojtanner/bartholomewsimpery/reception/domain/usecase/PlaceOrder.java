@@ -7,7 +7,6 @@ import ch.ojtanner.bartholomewsimpery.reception.domain.valueobject.SummoningFee;
 import ch.ojtanner.bartholomewsimpery.reception.infrastructure.port.IdGenerator;
 import ch.ojtanner.bartholomewsimpery.reception.infrastructure.port.OrderPublisher;
 import ch.ojtanner.bartholomewsimpery.reception.infrastructure.port.OrderRepository;
-import ch.ojtanner.bartholomewsimpery.reception.infrastructure.port.AccountingPublisher;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -3,6 +3,7 @@ package ch.ojtanner.bartholomewsimpery.orchestration.domain.usecase;
 import ch.ojtanner.bartholomewsimpery.orchestration.domain.service.SagaOrchestrator;
 import ch.ojtanner.bartholomewsimpery.orchestration.api.port.OrderPlacedHandler;
 import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
+import ch.ojtanner.bartholomewsimpery.schemaRegistry.reception.ReceptionOrderSchema;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nats.client.Message;
 import io.nats.client.MessageHandler;
@@ -28,7 +29,7 @@ public class OrderPlacedEventHandler implements OrderPlacedHandler, MessageHandl
     @Override
     public void onMessage(Message msg) {
         try {
-            Order placedOrder = objectMapper.readValue(msg.getData(), Order.class);
+            ReceptionOrderSchema placedOrder = objectMapper.readValue(msg.getData(), ReceptionOrderSchema.class);
             this.handle(placedOrder);
 
         } catch (IOException e) {
@@ -37,8 +38,8 @@ public class OrderPlacedEventHandler implements OrderPlacedHandler, MessageHandl
         }
     }
 
-    private void handle(Order placedOrder) {
-        System.out.println("Received OrderPlacedEvent: id: " + placedOrder.getId() + " status: " + placedOrder.getStatus() + " summoningFee: " + placedOrder.getSummoningFee().toString());
+    private void handle(ReceptionOrderSchema placedOrder) {
+        System.out.println("Received OrderPlacedEvent: id: " + placedOrder.orderId() + " status: " + placedOrder.orderStatus() + " summoningFee: " + placedOrder.summoningFee().toString());
         sagaOrchestrator.startSaga(placedOrder);
     }
 }

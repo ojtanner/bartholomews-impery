@@ -3,6 +3,7 @@ package ch.ojtanner.bartholomewsimpery.accounting.infrastructure.adapter;
 import ch.ojtanner.bartholomewsimpery.accounting.domain.entity.Order;
 import ch.ojtanner.bartholomewsimpery.accounting.infrastructure.port.PaymentProcessedPublisher;
 import ch.ojtanner.bartholomewsimpery.orchestration.api.adapter.NatsConnection;
+import ch.ojtanner.bartholomewsimpery.schemaRegistry.accounting.AccountingOrderSchema;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,12 @@ public class PaymentProcessedNatsPublisher implements PaymentProcessedPublisher 
     @Override
     public void publish(Order order) {
         try {
-            byte[] message = objectMapper.writeValueAsBytes(order);
+            AccountingOrderSchema accountingOrder = new AccountingOrderSchema(
+                    order.getId(),
+                    AccountingOrderSchema.OrderStatus.valueOf(order.getStatus().toString()),
+                    null
+            );
+            byte[] message = objectMapper.writeValueAsBytes(accountingOrder);
             String topicName = "process-payment.response";
             System.out.println("Publishing " + topicName);
             natsConnection.getConnection().publish(topicName, message);

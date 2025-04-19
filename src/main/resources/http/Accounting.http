@@ -1,5 +1,7 @@
 ### GET all payments
 GET localhost:8080/accounting/order
-    ?generated-in=IntelliJ IDEA
 
 ##
+
+### PATCH pay a standing payment
+PATCH localhost:8080/accounting/order/1da73940-aa2f-44c7-aa81-951f87c0c784

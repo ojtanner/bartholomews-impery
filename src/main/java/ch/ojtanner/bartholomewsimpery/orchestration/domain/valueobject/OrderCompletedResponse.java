@@ -4,7 +4,7 @@ import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
 
 public final class OrderCompletedResponse extends SagaResponse {
 
-    public OrderCompletedResponse(Order order) {
-        super(order);
+    public OrderCompletedResponse(String orderId) {
+        super(orderId);
     }
 }

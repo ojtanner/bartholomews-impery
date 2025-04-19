@@ -4,7 +4,7 @@ import ch.ojtanner.bartholomewsimpery.orchestration.api.port.PaymentProcessedHan
 import ch.ojtanner.bartholomewsimpery.orchestration.domain.service.SagaOrchestrator;
 import ch.ojtanner.bartholomewsimpery.orchestration.domain.valueobject.PaymentProcessedResponse;
 import ch.ojtanner.bartholomewsimpery.orchestration.domain.valueobject.SagaResponse;
-import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
+import ch.ojtanner.bartholomewsimpery.schemaRegistry.accounting.AccountingOrderSchema;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nats.client.Message;
 import org.springframework.stereotype.Service;
@@ -28,8 +28,8 @@ public class PaymentProcessedEventHandler implements PaymentProcessedHandler {
     @Override
     public void onMessage(Message msg) {
         try {
-            Order placedOrder = objectMapper.readValue(msg.getData(), Order.class);
-            this.handle(placedOrder);
+            AccountingOrderSchema accountingOrder = objectMapper.readValue(msg.getData(), AccountingOrderSchema.class);
+            this.handle(accountingOrder);
 
         } catch (IOException e) {
             System.out.println("PaymentProcessed onMessage error: " + e.getMessage());
@@ -37,9 +37,9 @@ public class PaymentProcessedEventHandler implements PaymentProcessedHandler {
         }
     }
 
-    private void handle(Order paymentProcessedOrder) {
-        System.out.println("Received PaymentProcessed: id: " + paymentProcessedOrder.getId() + " status: " + paymentProcessedOrder.getStatus() + " summoningFee: " + paymentProcessedOrder.getSummoningFee());
-        SagaResponse sagaResponse = new PaymentProcessedResponse(paymentProcessedOrder);
+    private void handle(AccountingOrderSchema accountingOrderSchema) {
+        System.out.println("Received PaymentProcessed: id: " + accountingOrderSchema.orderId() + " status: " + accountingOrderSchema.orderStatus() + " summoningFee: " + accountingOrderSchema.summoningFeeSchema());
+        SagaResponse sagaResponse = PaymentProcessedResponse.fromAccountingOrderSchema(accountingOrderSchema);
         sagaOrchestrator.handleResponse(sagaResponse);
     }
 }

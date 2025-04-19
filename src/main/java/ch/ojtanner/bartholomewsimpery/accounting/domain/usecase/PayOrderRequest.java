@@ -25,9 +25,9 @@ public class PayOrderRequest implements PayOrderUseCase {
     public void handle(String orderId) throws PaymentFailedException {
         Order orderToPay = orderRepository.findById(orderId).orElseThrow(PaymentFailedException::new);
 
-        if (Math.random() < 0.5) {
-            throw new PaymentFailedException();
-        }
+//        if (Math.random() < 0.5) {
+//            throw new PaymentFailedException();
+//        }
 
         orderToPay.feePayed();
         orderRepository.save(orderToPay);

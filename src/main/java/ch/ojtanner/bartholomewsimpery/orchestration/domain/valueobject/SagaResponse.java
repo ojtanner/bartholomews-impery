@@ -4,13 +4,13 @@ import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
 
 public abstract sealed class SagaResponse permits ImpDeliveredResponse, ImpSummonedResponse, OrderCompletedResponse, PaymentProcessedResponse {
 
-    private final Order order;
+    private final String orderId;
 
-    protected SagaResponse(Order order) {
-        this.order = order;
+    protected SagaResponse(String orderId) {
+        this.orderId = orderId;
     }
 
-    public Order getOrder() {
-        return order;
+    public String getOrderId() {
+        return this.orderId;
     }
 }

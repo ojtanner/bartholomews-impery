@@ -3,6 +3,7 @@ package ch.ojtanner.bartholomewsimpery.accounting.domain.usecase;
 import ch.ojtanner.bartholomewsimpery.accounting.api.port.RegisterOrderUseCase;
 import ch.ojtanner.bartholomewsimpery.accounting.infrastructure.port.OrderRepository;
 import ch.ojtanner.bartholomewsimpery.accounting.domain.entity.Order;
+import ch.ojtanner.bartholomewsimpery.schemaRegistry.accounting.AccountingOrderSchema;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nats.client.Message;
 import org.springframework.stereotype.Component;
@@ -26,9 +27,9 @@ public class RegisterOrder implements RegisterOrderUseCase {
     @Override
     public void handle(Message message) {
         try {
-            ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order orderToBePayed = objectMapper.readValue(message.getData(), ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order.class);
-            Order domainOrder = Order.fromReceptionOrder(orderToBePayed);
-            System.out.println("Accounting received message: " + orderToBePayed.getId());
+            AccountingOrderSchema accountingOrder = objectMapper.readValue(message.getData(), AccountingOrderSchema.class);
+            Order domainOrder = Order.fromSchemaRegistry(accountingOrder);
+            System.out.println("Accounting received message: " + domainOrder.getId());
             orderRepository.save(domainOrder);
         } catch (IOException e) {
             throw new RuntimeException(e);

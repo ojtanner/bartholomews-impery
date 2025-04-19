@@ -1,8 +1,8 @@
 package ch.ojtanner.bartholomewsimpery.orchestration.infrastructure.port;
 
-import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
+import ch.ojtanner.bartholomewsimpery.schemaRegistry.reception.ReceptionOrderSchema;
 
 public interface AccountingCommandsPublisher {
 
-    void publishProcessPaymentCommand(Order order);
+    void publishProcessPaymentCommand(ReceptionOrderSchema order);
 }

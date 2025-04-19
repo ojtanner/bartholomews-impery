@@ -4,7 +4,7 @@ import ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order;
 
 public final class ImpSummonedResponse extends SagaResponse {
 
-    public ImpSummonedResponse(Order order) {
-        super(order);
+    public ImpSummonedResponse(String orderId) {
+        super(orderId);
     }
 }

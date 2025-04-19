@@ -22,8 +22,7 @@ public class AccountingNatsSubscriber {
     }
 
     private void subscribeToOrderCreatedEvent() {
-        // TODO: rename to register-pending-payment or something
-        final String topicName = "process-payment";
+        final String topicName = "register-standing-order-payment";
         Dispatcher dispatcher = natsConnection.getConnection().createDispatcher();
         dispatcher.subscribe(topicName, registerOrderHandler::handle);
     }

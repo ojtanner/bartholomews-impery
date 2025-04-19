@@ -2,6 +2,8 @@ package ch.ojtanner.bartholomewsimpery.accounting.domain.entity;
 
 import ch.ojtanner.bartholomewsimpery.accounting.domain.constant.OrderStatus;
 import ch.ojtanner.bartholomewsimpery.accounting.domain.valueobject.SummoningFee;
+import ch.ojtanner.bartholomewsimpery.reception.domain.constant.Currency;
+import ch.ojtanner.bartholomewsimpery.schemaRegistry.accounting.AccountingOrderSchema;
 
 public class Order extends Entity {
 
@@ -27,12 +29,12 @@ public class Order extends Entity {
         this.status = OrderStatus.FEE_PAID;
     }
 
-    public static Order fromReceptionOrder(ch.ojtanner.bartholomewsimpery.reception.domain.entity.Order receptionOrder) {
+    public static Order fromSchemaRegistry(AccountingOrderSchema accountingOrder) {
         return new Order(
-                receptionOrder.getId(),
+                accountingOrder.orderId(),
                 new SummoningFee(
-                        receptionOrder.getSummoningFee().getCurrency(),
-                        receptionOrder.getSummoningFee().getAmount()
+                        Currency.valueOf(accountingOrder.summoningFeeSchema().currency().toString()),
+                        accountingOrder.summoningFeeSchema().amount()
                 )
         );
     }

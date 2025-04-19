@@ -1,25 +1,33 @@
+networks:
+  monitoring:
+    driver: bridge
+
 services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    network_mode: host
     volumes:
       - "./backing-services/prometheus.yml:/etc/prometheus/prometheus.yml"
     ports:
       - "9090:9090"
     restart: always
+    networks:
+      - monitoring
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
 
   grafana:
     image: grafana/grafana
     container_name: grafana
     volumes:
       - ./backing-services/datasources.yml:/etc/grafana/provisioning/datasources.yml
-    network_mode: host
     ports:
       - '3000:3000'
     depends_on:
       - prometheus
     restart: always
+    networks:
+      - monitoring
 
   nats:
     image: nats
